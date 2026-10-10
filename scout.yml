@@ -1,2 +1,4 @@
-- name: Install requests
-  run: pip install requests
+- name: Install libraries
+  run: |
+    pip install requests
+    pip install geopy
