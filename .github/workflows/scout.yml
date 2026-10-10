@@ -16,8 +16,11 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install requests
-        run: pip install requests
+      - name: Install libraries
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+          pip install geopy
 
       - name: Run bot
         env:
