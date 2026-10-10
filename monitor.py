@@ -1,13 +1,45 @@
+from geopy.geocoders import Nominatim
+from geopy.distance import geodesic
+import os
 import requests
 
-url = "https://www.immobiliare.it/search-list/?idContratto=1&idCategoria=20&prezzoMinimo=20000&prezzoMassimo=200000&noAste=1&__lang=it&pag=1"
+VICENZA = (45.5455, 11.5354)
 
-r = requests.get(
-    url,
-    headers={
-        "User-Agent": "Mozilla/5.0"
-    }
-)
+geolocator = Nominatim(user_agent="ricerca_immobiliare")
 
-print("STATUS:", r.status_code)
-print(r.text[:1000])
+location = geolocator.geocode("Occhiobello, Italia")
+
+if location:
+
+    distanza = geodesic(
+        VICENZA,
+        (location.latitude, location.longitude)
+    ).km
+
+    messaggio = f"""
+🏠 TEST IMMOBILE
+
+📍 Occhiobello
+
+📏 Distanza da Vicenza:
+{distanza:.1f} km
+
+💰 Prezzo: 73.000 €
+
+📐 Superficie: 450 mq
+
+💵 €/mq: 162
+"""
+
+    token = os.getenv("TELEGRAM_TOKEN")
+    chat_id = os.getenv("TELEGRAM_CHAT_ID")
+
+    requests.post(
+        f"https://api.telegram.org/bot{token}/sendMessage",
+        json={
+            "chat_id": chat_id,
+            "text": messaggio
+        }
+    )
+
+print("ok")
