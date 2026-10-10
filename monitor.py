@@ -1,1 +1,1 @@
-print("Ricerca Immobiliare bot avviato")
+print("Ricerca Immobiliare Bot avviato correttamente")
