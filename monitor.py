@@ -3,11 +3,18 @@ from geopy.distance import geodesic
 import os
 import requests
 
+# DATI TEST
+comune = "Occhiobello"
+prezzo = 73000
+mq = 450
+
+# VICENZA
 VICENZA = (45.5455, 11.5354)
 
+# GEOLOCALIZZAZIONE
 geolocator = Nominatim(user_agent="ricerca_immobiliare")
 
-location = geolocator.geocode("Occhiobello, Italia")
+location = geolocator.geocode(f"{comune}, Italia")
 
 if location:
 
@@ -16,19 +23,30 @@ if location:
         (location.latitude, location.longitude)
     ).km
 
+    prezzo_mq = prezzo / mq
+
+    # PRIORITA'
+    if distanza <= 100:
+        priorita = "🟢 Alta"
+
+    elif distanza <= 180:
+        priorita = "🟠 Media"
+
+    else:
+        priorita = "🔴 Bassa"
+
     messaggio = f"""
-🏠 TEST IMMOBILE
+🔥 NUOVA OPPORTUNITÀ
 
-📍 Occhiobello
+📍 {comune}
+📏 {distanza:.1f} km da Vicenza
 
-📏 Distanza da Vicenza:
-{distanza:.1f} km
+💰 Prezzo: {prezzo:,.0f} €
+📐 Superficie: {mq} mq
 
-💰 Prezzo: 73.000 €
+💵 €/mq: {prezzo_mq:.0f} €
 
-📐 Superficie: 450 mq
-
-💵 €/mq: 162
+{priorita}
 """
 
     token = os.getenv("TELEGRAM_TOKEN")
@@ -42,4 +60,4 @@ if location:
         }
     )
 
-print("ok")
+print("Messaggio inviato")
