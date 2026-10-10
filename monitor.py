@@ -1,28 +1,13 @@
-import os
 import requests
 
-token = os.getenv("TELEGRAM_TOKEN")
-chat_id = os.getenv("TELEGRAM_CHAT_ID")
+url = "https://www.immobiliare.it/search-list/?idContratto=1&idCategoria=20&prezzoMinimo=20000&prezzoMassimo=200000&noAste=1&__lang=it&pag=1"
 
-messaggio = """
-🏠 Ricerca Immobiliare Bot
-
-✅ GitHub funziona
-✅ Telegram funziona
-✅ Il bot è operativo
-
-Prossimo step:
-monitoraggio Immobiliare.it
-"""
-
-url = f"https://api.telegram.org/bot{token}/sendMessage"
-
-requests.post(
+r = requests.get(
     url,
-    json={
-        "chat_id": chat_id,
-        "text": messaggio
+    headers={
+        "User-Agent": "Mozilla/5.0"
     }
 )
 
-print("Messaggio inviato")
+print("STATUS:", r.status_code)
+print(r.text[:1000])
