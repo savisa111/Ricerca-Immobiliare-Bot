@@ -1,0 +1,20 @@
+name: Ricerca Immobiliare Bot
+
+on:
+  workflow_dispatch:
+
+jobs:
+  scout:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Scarica repository
+        uses: actions/checkout@v4
+
+      - name: Installa Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Avvia bot
+        run: python monitor.py
