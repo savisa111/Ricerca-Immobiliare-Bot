@@ -1,4 +1,10 @@
 {
+  "prezzo_massimo": 200000,
+  "mq_minimi": 250,
+  "distanza_massima": 250,
+  "soglia_priorita_alta": 100,
+  "soglia_priorita_media": 180
+}{
   "vicenza": {
     "lat": 45.5455,
     "lon": 11.5354
